@@ -7,14 +7,12 @@
  *             See LICENSE for details.
  */
 
-#include "libclipboard.h"
+#include "libclipboard.h" // IWYU pragma: keep
 
 #ifdef LIBCLIPBOARD_BUILD_WIN32
 
-#include "libclipboard.h"
 #include <windows.h>
 #include <tchar.h>
-
 
 /** Win32 Implementation of the clipboard context **/
 struct clipboard_c {

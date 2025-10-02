@@ -1,16 +1,16 @@
 /**
  *  \file clipboard_cocoa.c
- *  \brief OS X (Cocoa) implementation of the clipboard.
+ *  \brief MacOS (Cocoa) implementation of the clipboard.
  *
  *  \copyright Copyright (C) 2016 Jeremy Tan.
  *             This file is released under the MIT license.
  *             See LICENSE for details.
  */
 
-#include "libclipboard.h"
+#include "libclipboard.h" // IWYU pragma: keep
+
 #ifdef LIBCLIPBOARD_BUILD_COCOA
 
-#include "libclipboard.h"
 #include <stdlib.h>
 
 #include <libkern/OSAtomic.h>

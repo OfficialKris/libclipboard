@@ -1,16 +1,14 @@
 # libclipboard cmake configuration file
 
-cmake_minimum_required(VERSION 2.8)
-project(libclipboard)
+cmake_minimum_required(VERSION 3.25)
+project(libclipboard VERSION 1.2
+                     DESCRIPTION "Lightweight cross-platform clipboard library"
+                     LANGUAGES C)
 
 # Defines and options
-set(LIBCLIPBOARD_VERSION_MAJOR 1 CACHE STRING "libclipboard major version number")
-set(LIBCLIPBOARD_VERSION_MINOR 0 CACHE STRING "libclipboard minor version number")
-set(LIBCLIPBOARD_VERSION "${LIBCLIPBOARD_VERSION_MAJOR}.${LIBCLIPBOARD_VERSION_MINOR}" CACHE STRING "libclipboard version number")
-
 option(LIBCLIPBOARD_FORCE_WIN32 "Force building the Win32 backend (default:off)" OFF)
 option(LIBCLIPBOARD_FORCE_X11 "Force building the X11 backend (default:off)" OFF)
-option(LIBCLIPBOARD_FORCE_COCOA "Force building the Cocoa backend(default:off)" OFF)
+option(LIBCLIPBOARD_FORCE_COCOA "Force building the Cocoa backend (default:off)" OFF)
 
 option(LIBCLIPBOARD_ADD_SOVERSION "Add soname versions to the built library (default:off)" OFF)
 option(LIBCLIPBOARD_USE_STDCALL "Use the stdcall calling convention (default:off)" OFF)
@@ -76,7 +74,11 @@ include_directories("${CMAKE_CURRENT_SOURCE_DIR}/include")
 include_directories("${CMAKE_CURRENT_BINARY_DIR}/include")
 
 # Configure header
-configure_file("include/libclipboard-config.h.in" "include/libclipboard-config.h")
+configure_file(
+    "include/libclipboard-config.h.in"
+    "include/libclipboard-config.h"
+    @ONLY
+)
 
 # Source files
 set(HEADERS
@@ -91,17 +93,12 @@ set(SOURCE
     src/clipboard_common.c
 )
 
-# Set the output folders
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
-
 # Make the library
 add_library(clipboard ${HEADERS} ${SOURCE})
 target_link_libraries(clipboard LINK_PRIVATE ${LIBCLIPBOARD_PRIVATE_LIBS})
 if (LIBCLIPBOARD_ADD_SOVERSION)
     # Not by default because my file system doesn't support symlinks
-    set_target_properties(clipboard PROPERTIES SOVERSION ${LIBCLIPBOARD_VERSION} VERSION ${LIBCLIPBOARD_VERSION})
+    set_target_properties(clipboard PROPERTIES SOVERSION ${PROJECT_VERSION} VERSION ${PROJECT_VERSION})
 endif()
 
 # Testing mode?
@@ -131,8 +128,8 @@ if (PKGCONFIG_FOUND)
     string(REPLACE "-l" "" LIBCLIPBOARD_PRIVATE_LIBS_LIST "${LIBCLIPBOARD_PRIVATE_LIBS}")
     string(REPLACE ";" " -l" LIBCLIPBOARD_PRIVATE_LIBS_LIST "${LIBCLIPBOARD_PRIVATE_LIBS_LIST}")
     string(STRIP "${LIBCLIPBOARD_PRIVATE_LIBS_LIST}" LIBCLIPBOARD_PRIVATE_LIBS_LIST)
-    configure_file("libclipboard.pc.in" "${CMAKE_ARCHIVE_OUTPUT_DIRECTORY}/pkgconfig/libclipboard.pc" @ONLY)
-    install(FILES "${CMAKE_ARCHIVE_OUTPUT_DIRECTORY}/pkgconfig/libclipboard.pc" DESTINATION "lib/pkgconfig")
+    configure_file("libclipboard.pc.in" "${CMAKE_BINARY_DIR}/lib/pkgconfig/libclipboard.pc" @ONLY)
+    install(FILES "${CMAKE_BINARY_DIR}/lib/pkgconfig/libclipboard.pc" DESTINATION "lib/pkgconfig")
 endif()
 
 # Install options
@@ -146,7 +143,8 @@ install(FILES ${HEADERS} DESTINATION include)
 configure_file(
     "${CMAKE_CURRENT_SOURCE_DIR}/cmake_uninstall.cmake.in"
     "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake"
-    IMMEDIATE @ONLY)
+    IMMEDIATE @ONLY
+)
 
 add_custom_target(uninstall
     COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake)

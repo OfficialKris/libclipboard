@@ -9,7 +9,7 @@
 
 #define _POSIX_C_SOURCE 199309L
 
-#include "libclipboard.h"
+#include "libclipboard.h" // IWYU pragma: keep
 
 #ifdef LIBCLIPBOARD_BUILD_X11
 
