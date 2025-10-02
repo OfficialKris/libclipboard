@@ -9,6 +9,8 @@ set (HEADERS
     libclipboard-test-private.h
 )
 
+enable_language(CXX)
+
 # Add the target
 add_executable (run-tests ${HEADERS} ${SOURCE})
 add_executable (run-smoke1 smoke_test1.c)

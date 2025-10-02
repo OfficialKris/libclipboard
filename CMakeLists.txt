@@ -52,7 +52,7 @@ if (CMAKE_COMPILER_IS_GNUCC OR LIBCLIPBOARD_BUILD_COCOA)
 endif()
 
 if (CMAKE_COMPILER_IS_GNUCXX OR LIBCLIPBOARD_BUILD_COCOA)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -pedantic -g")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -Wall -pedantic -g")
 endif()
 
 # Dependencies
@@ -102,17 +102,17 @@ if (LIBCLIPBOARD_ADD_SOVERSION)
 endif()
 
 # Testing mode?
-if (EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/third_party/googletest/googletest)
+if (EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/tests/third_party/googletest/googletest)
     # gtest does not play well with pthreads and mingw
     if (gtest_disable_pthreads)
         set(LIBCLIPBOARD_USE_PTHREADS_INIT ${CMAKE_USE_PTHREADS_INIT})
         unset(CMAKE_USE_PTHREADS_INIT)
     endif()
 
-    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/third_party/googletest EXCLUDE_FROM_ALL)
+    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/tests/third_party/googletest EXCLUDE_FROM_ALL)
     enable_testing()
     include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
-    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/test)
+    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/tests)
 
     set(CMAKE_USE_PTHREADS_INIT ${LIBCLIPBOARD_USE_PTHREADS_INIT})
 else()

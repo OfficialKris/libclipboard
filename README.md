@@ -29,7 +29,7 @@ A cross-platform clipboard library.
 * cmake
 * make
 * c99 compiler (gcc/clang/msvc)
-* gtest & g++ >= 4.7 (optional - for unit testing)
+* googletest and g++ >= 9 (optional - for unit testing)
 * libxcb-dev (for Linux/X11)
 * pthreads (for Linux/X11)
 
