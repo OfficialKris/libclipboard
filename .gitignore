@@ -48,6 +48,7 @@ tags
 doc/
 doxygen_sqlite3.db
 libclipboard-config.h
+build/
 
 # CMake Visual Studio generated
 .vs/

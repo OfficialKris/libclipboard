@@ -1,6 +1,11 @@
 libclipboard [![Linux/OS X Build Status](https://travis-ci.org/jtanx/libclipboard.svg?branch=master)](https://travis-ci.org/jtanx/libclipboard) [![Win32 Build status](https://ci.appveyor.com/api/projects/status/r1oanfx5kd18xfxa?svg=true)](https://ci.appveyor.com/project/jtanx/libclipboard)
 =========
 
+> [!IMPORTANT]
+> This fork provides maintenance to keep the library compiling and working properly. To see specific changes, view commit log.
+>
+> As opposed to other clipboard libraries, this library has no dependencies and is quite minimal (under 2k lines of code).
+
 A cross-platform clipboard library.
 
 ## Currently supported actions
@@ -9,16 +14,22 @@ A cross-platform clipboard library.
 * Retrieving/setting text (UTF-8)
 
 ## Supported platforms
-* Windows
 * Linux (X11)
-* OS X (Cocoa)
+* MacOS (Cocoa)
+* Windows
 
 ## Platforms to be supported in the future
-* Linux (Wayland) (maybe)
+> [!NOTE]
+> Only setting and reading the clipboard from the same application works currently.
+>
+> Reading from other applications does not work on Wayland right now.
+* Linux (Wayland)
 
 ## Requirements
 * cmake
-* gtest & g++ >= 4.7 (optional; for unit testing)
+* make
+* c99 compiler (gcc/clang/msvc)
+* gtest & g++ >= 4.7 (optional - for unit testing)
 * libxcb-dev (for Linux/X11)
 * pthreads (for Linux/X11)
 
@@ -27,8 +38,10 @@ Quickstart
 ~~~~~
 git clone https://github.com/jtanx/libclipboard
 cd libclipboard
-cmake .
-make -j4
+mkdir build
+cd build
+cmake ..
+make
 sudo make install        (optional)
 ~~~~~
 
@@ -37,9 +50,10 @@ Building test module and samples
 cd libclipboard
 git submodule init
 git submodule update
-git clean -dxf            (if you had a previous build)
-cmake .
-make check -j4
+mkdir build
+cd build
+cmake ..
+make check
 ~~~~~
 
 To add SOVERSION to the library (i.e. `libclipboard.so.1`), configure with
