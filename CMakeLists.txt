@@ -128,7 +128,7 @@ if (PKGCONFIG_FOUND)
     string(REPLACE "-l" "" LIBCLIPBOARD_PRIVATE_LIBS_LIST "${LIBCLIPBOARD_PRIVATE_LIBS}")
     string(REPLACE ";" " -l" LIBCLIPBOARD_PRIVATE_LIBS_LIST "${LIBCLIPBOARD_PRIVATE_LIBS_LIST}")
     string(STRIP "${LIBCLIPBOARD_PRIVATE_LIBS_LIST}" LIBCLIPBOARD_PRIVATE_LIBS_LIST)
-    configure_file("libclipboard.pc.in" "${CMAKE_BINARY_DIR}/lib/pkgconfig/libclipboard.pc" @ONLY)
+    configure_file("cmake/libclipboard.pc.in" "${CMAKE_BINARY_DIR}/lib/pkgconfig/libclipboard.pc" @ONLY)
     install(FILES "${CMAKE_BINARY_DIR}/lib/pkgconfig/libclipboard.pc" DESTINATION "lib/pkgconfig")
 endif()
 
@@ -141,7 +141,7 @@ install(FILES ${HEADERS} DESTINATION include)
 
 # Uninstall target
 configure_file(
-    "${CMAKE_CURRENT_SOURCE_DIR}/cmake_uninstall.cmake.in"
+    "${CMAKE_CURRENT_SOURCE_DIR}/cmake/cmake_uninstall.cmake.in"
     "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake"
     IMMEDIATE @ONLY
 )
