@@ -45,7 +45,7 @@ make
 sudo make install        (optional)
 ~~~~~
 
-Building test module and samples
+Building test module and examples
 ~~~~~
 cd libclipboard
 git submodule init

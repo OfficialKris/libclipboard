@@ -120,7 +120,7 @@ else()
 endif()
 
 # Build sample executables
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/samples)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/examples)
 
 # Pkgconfig
 include(FindPkgConfig QUIET)
